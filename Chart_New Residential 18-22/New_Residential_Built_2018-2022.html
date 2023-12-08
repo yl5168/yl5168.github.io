@@ -1,0 +1,150 @@
+<!-- Code from d3-graph-gallery.com -->
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://morgan3d.github.io/include.js/include.min.js"></script>
+
+<!-- Add styles for the title -->
+<style>
+  h1 {
+    text-align: left;
+    margin-top: 20px; /* Add margin for better spacing */
+    font-size: 15px;
+    font: bold;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  h2 {
+    text-align: left;
+    margin-top: 10px; /* Add margin for better spacing */
+    font-size: 13px;
+    color: grey;
+    font: bold;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
+
+<!-- Create a div to contain the chart and title -->
+<div id="chart-container">
+  <h1>New Privately Owned Housing Units Completed by Region: 2018-2022</h1>
+  <h2>(Number of housing units in thousands.)</h2>
+
+  <!-- Create a div where the graph will take place -->
+  <div id="my_dataviz"></div>
+
+  <script>
+    // set the dimensions and margins of the graph
+    var margin = { top: 10, right: 30, bottom: 20, left: 50 },
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3
+      .select("#my_dataviz")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // Parse the Data
+    d3.csv("NEWRESIBUILT20182022.csv", function (data) {
+      // List of subgroups = header of the csv files = soil condition here
+      var subgroups = data.columns.slice(1);
+
+      // List of groups = years here = value of the first column called year -> I show them on the X axis
+      var years = d3
+        .map(data, function (d) {
+          return d.year;
+        })
+        .keys();
+
+      // Add X axis
+      var x = d3.scaleBand().domain(years).range([0, width]).padding([0.2]);
+      svg
+        .append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x).tickSizeOuter(0));
+
+      // Add Y axis
+      var y = d3.scaleLinear().domain([0, 1600]).range([height, 0]);
+      svg.append("g").call(d3.axisLeft(y));
+
+      // color palette = one color per subgroup
+      var color = d3
+        .scaleOrdinal()
+        .domain(subgroups)
+        .range(["#1AA7EC", "#C7EFCF", "#FE5F55", "#EEF5DB"]);
+
+      //stack the data? --> stack per subgroup
+      var stackedData = d3.stack().keys(subgroups)(data);
+
+      // ----------------
+      // Create a tooltip
+      // ----------------
+      var tooltip = d3
+        .select("#my_dataviz")
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "1px")
+        .style("border-radius", "5px")
+        .style("padding", "10px");
+
+      // Three function that change the tooltip when user hover / move / leave a cell
+      var mouseover = function (d) {
+        var subgroupName = d3.select(this.parentNode).datum().key;
+        var subgroupValue = d.data[subgroupName];
+        tooltip
+          .html(
+            "Region: " + subgroupName + "<br>" + "Unit Count: " + subgroupValue
+          )
+          .style("opacity", 1);
+      };
+      var mousemove = function (d) {
+        tooltip
+          .style("left", d3.mouse(this)[0] + 90 + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+          .style("top", d3.mouse(this)[1] + "px");
+      };
+      var mouseleave = function (d) {
+        tooltip.style("opacity", 0);
+      };
+
+      // Show the bars
+      svg
+        .append("g")
+        .selectAll("g")
+        // Enter in the stack data = loop key per key = group per group
+        .data(stackedData)
+        .enter()
+        .append("g")
+        .attr("fill", function (d) {
+          return color(d.key);
+        })
+        .selectAll("rect")
+        // enter a second time = loop subgroup per subgroup to add all rectangles
+        .data(function (d) {
+          return d;
+        })
+        .enter()
+        .append("rect")
+        .attr("x", function (d) {
+          return x(d.data.year);
+        })
+        .attr("y", function (d) {
+          return y(d[1]);
+        })
+        .attr("height", function (d) {
+          return y(d[0]) - y(d[1]);
+        })
+        .attr("width", x.bandwidth())
+        .attr("stroke", "grey")
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave);
+    });
+  </script>
+</div>

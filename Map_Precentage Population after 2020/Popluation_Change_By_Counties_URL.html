@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<head>
+<!-- tooltip style -->
+<style type="text/css">
+  #tooltipTest {
+    position: absolute;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    opacity: 0.8;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    display:none;
+  }
+
+  #tooltip.hidden {
+    display: none;
+  }
+
+  #tooltip p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .legend-text {
+    font-family: 'Times New Roman, serif';
+    font-size: 12px;
+  }
+
+  #Percentage_Total_Built_2020_or_later{
+    display: none;
+  }
+
+  #h1 {
+    text-align: left;
+    margin-top: 20px; /* Add margin for better spacing */
+    font-size: 20px;
+    font: bold;
+    font-family: Arial, Helvetica, sans-serif;
+
+  }
+  
+</style>
+</head>
+
+<body>
+	<div id="tooltipTest"></div>
+	<div id="years"></div>
+
+<!-- Create an element where the map will take place -->
+<svg id="my_dataviz" width="1000" height="800">
+  <!-- Add a title -->
+  <text id="h1" x="10" y="30" text-anchor="middel" font-size="20" font-weight="bold">Percentage Change of Population Since the Pandemic Began: 2020-2022</text>
+</svg>
+
+<script>
+  // The svg
+  const svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+  // Data and color scale
+  const data = new Map();
+  const colorScale = d3.scaleLinear().domain([-0.6, 0, 0.6]).range(["red", "white", "blue"]);
+
+  // Load external data and boot
+
+  var geoPath = d3.json("https://raw.githubusercontent.com/alison-lam/tl2872.github.io/main/02_Percentage_Population_Change_After_2020/county.json");
+  var dataPath = d3.csv("https://raw.githubusercontent.com/alison-lam/tl2872.github.io/main/02_Percentage_Population_Change_After_2020/GEOID-POP-EST-2020-2022-NEW.csv");
+
+
+//ADDING THESE NEW KEYS TO FORMAT DATA BELOW
+const headers = ["Percentage_Total_Built_2020_or_later"]
+  
+  //ADD VARIABLE FOR CURRENT YEAR SELECTED
+  let currentYear = "Percentage_Total_Built_2020_or_later"
+  //ADD SOME DIVS FOR EACH OF THE YEARS
+  for(h in headers){
+  	let header = headers[h]
+  	d3.select("#years").append("div")
+	  .attr("id",header)
+	  .html(header)
+	  .on('click',function(){
+	  	currentYear = d3.select(this).attr("id")
+		 // console.log(currentYear)
+		  //THIS BUTTON CLICK WILL SET THE CURRENT YEAR, USE A FUNCTION TO UPDATE THE MAP TO THAT YEAR'S DATA/COLORS BY CHANGING THE FUNCTION CALLED UPDATEYEARS
+		  updateYears(currentYear)
+	  })
+  }
+
+
+  
+  function updateYears(currentYear){
+  	d3.selectAll('path')
+	  //TODO make your updated path here using the input currentYear
+  }
+  
+  function formatData(dataInput) {
+    //make key value pairs
+    let formatted = {};
+	
+    for (i in dataInput) {
+      let geoid = dataInput[i]["GEO_ID"];
+	  formatted[geoid]={}
+	  //LOOP THROUGH THE KEYS AND ADD EACH VALUE HERE AS NESTED DICTIONARY/OBJECT
+	  for(let h in headers){
+	  	let header = headers[h]
+	      let value = parseFloat(
+	        dataInput[i][header]
+	      );
+		  formatted[geoid][header] = value;
+	  }
+    }
+	//console.log(formatted)
+    return formatted;
+  }
+
+
+
+  Promise.all([
+    geoPath,
+    dataPath
+  ]).then(function (loadData) {
+    let topo = loadData[0];
+
+    let data = loadData[1];
+    let formattedPost2020 = formatData(data);
+
+    // Map and projection
+    const path = d3.geoPath();
+    var padding = 10;
+    var projection = d3
+      .geoAlbersUsa()
+      .translate([487.5, 305])
+      .fitExtent(
+        [
+          [padding, padding],
+          [width - padding, height - padding],
+        ],
+        topo
+      );
+
+    // Draw the map
+    svg
+      .append("g")
+      .selectAll("path")
+      .data(topo.features)
+      .enter()
+      .append("path")
+	.attr("class","")
+      .attr("d", d3.geoPath().projection(projection))
+	.attr("fill", function (d) {
+		  let currentGeoid = d.properties.AFFGEOID;
+		
+		//CHECK IF THE GEOID IS IN THE DATA
+		if(Object.keys(formattedPost2020).indexOf(currentGeoid)>-1){
+			var currentValue = formattedPost2020[currentGeoid]['Percentage_Total_Built_2020_or_later'];
+		}else{
+			var currentValue = 0
+		}	  
+        //return colorScale(currentValue);
+        return currentValue === 0 ? "white" : colorScale(currentValue);
+      })
+      .style("stroke", "none")
+      .attr("class", function (d) {
+        return "Country";
+      })
+	  .attr("id",function(d){
+	  	return d.properties.AFFGEOID
+	  })
+      .style("opacity", 1)
+
+	  .on("mouseover",function(e,d){
+    //  console.log(d.properties)
+		  let currentGeoid = d3.select(this).attr("id")	
+		  	  
+		  let currentValue = formattedPost2020[currentGeoid]['Percentage_Total_Built_2020_or_later'] || 0;
+		  let percentcurrentValue = currentValue*100
+      let roundedcurrentValue = percentcurrentValue.toFixed(2)
+
+      tooltipTest.style.display = 'block'; // or 'inline' depending on your design
+
+		  d3.select("#tooltipTest")
+		  .html(d.properties.NAMELSAD+","+d.properties.STATE_NAME+"<br>"+"Percentage Change: "+roundedcurrentValue+"%")
+	    .style("position","absolute") .style("left", event.clientX + "px")
+      .style("top", event.clientY - 28 + "px")
+      .transition()
+      .duration(200)
+      .style("display", "block")
+
+      //Add stroke to county on hover
+      d3.select(this)
+      .transition()
+      .duration(200)
+      .style("opacity", 1)
+      .style("stroke", "black")
+      .style("stroke-width", 2);  // Example: set the stroke width to 2 pixels
+
+	  })
+    .on("mouseleave",function(e,d){
+      //d3.selectAll(".Country").transition().duration(200).style("opacity", 1);
+      d3.select(this).transition().duration(200).style("stroke", "none");
+
+      //Hide the tooltip
+      d3.select("#tooltipTest").transition().duration(200).style("display", "none");
+          });
+
+// Add Legend
+
+// Add Color Legend
+const legend = svg.append("g")
+  .attr("class", "legend")
+  .attr("transform", "translate(20, 20)");
+
+// Append gradient rectangles or color stops for the legend
+const stops = [-0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6];
+
+const rectWidth = 40; // Adjust the width of the legend rectangles
+const rectHeight = 25; // Adjust the height of the legend rectangles
+const rectSpacing = 0; // Adjust the spacing between legend rectangles
+
+legend.selectAll("rect")
+  .data(stops)
+  .enter()
+  .append("rect")
+  .attr("width", rectWidth)
+  .attr("height", rectHeight)
+  .attr("x", (d, i) => i * (rectWidth + rectSpacing))
+  .attr("y", 30)
+  .attr("fill", d => colorScale(d));
+
+const textOffset = 15; // Adjust the offset of the legend text from the rectangles
+
+legend.selectAll("text")
+  .data(stops)
+  .enter()
+  .append("text")
+  .attr("x", (d, i) => i * (rectWidth + rectSpacing) + textOffset)
+  .attr("y", 70)
+  .text(function (d) { return d * 100 + "%" })
+  .classed("legend-text", true);
+
+// Add legend axis
+//const legendScale = d3.scaleLinear().domain([0, 1]).range([0, 200]);
+//const legendAxis = d3.axisBottom(legendScale);
+
+legend.append("g")
+  .attr("transform", "translate(0, 20)")
+  .call(legendAxis);
+
+});
+</script>
+</body>
+</html>
