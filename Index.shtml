@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>test2</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="https://morgan3d.github.io/include.js/include.min.js"></script>
+	<script src="https://d3js.org/d3.v4.js"></script>
+
+<style>
+	body, h1, h2, h3, h4, h5, h6  {
+  font-family: Helvetica, Arial, sans-serif;
+}
+	h1 {
+  font-size: 40px;	
+}
+	h2 {
+  font-size: 24px;
+}
+	h3 {
+		font-size: 18px;
+	}
+	h4 {
+		font-size: 60px;
+	}
+	h5 {
+		font-size: 40px;
+		writing-mode: vertical-rl;
+        text-orientation: upright;
+	}
+	 .vl {
+  border-right: 2px dotted gray;
+  height:800px;
+  margin-left: -3px;
+  margin-top: 80px;
+}
+	.container {
+  display: flex;
+  overflow-x: scroll;
+}
+    .page {
+  width: 1320px;
+  height: 1000px;
+  flex-shrink: 0;
+}
+	.page:nth-child(1){
+		background: #fcfbed
+	}
+	.page:nth-child(2){
+		background: #fcfbed
+	}
+	.page:nth-child(3){
+		background: #fcfbed
+	}
+	.page_narrow {
+		width: 700px;
+		Height: 1000px;
+		flex-shrink: 0;
+	}
+	.page_line {
+		width: 200px;
+		Height: 1000px;
+		flex-shrink: 0;
+		Margin-right: 120px
+	}
+	.page_title {
+		width: 200px;
+		Height: 800px;
+		flex-shrink: 0;
+		Margin-right: 30px;
+		border-left: 2px dotted gray;
+        margin-left: 1px;
+        margin-top: 80px;
+		letter-spacing: -6px;
+		word-spacing: -5px;
+	}
+	.page_ending {
+		width: 400px;
+		Height: 400px;
+		flex-shrink: 0;
+		border-left: 2px dotted gray;
+		border-right: 2px dotted gray;
+		margin-left: 10px;
+		margin-right: 10px;
+		letter-spacing: -1px;
+		margin-top: 180px;
+		
+	}
+	
+	</style>
+	</head>
+
+<body>
+	<main>
+	<div class="container">
+		
+		<div class="page">
+		<h4 class="w3-opacity 
+				   w3-padding-large 
+				   w3-margin-top" 
+			style="text-shadow:1px 1px 0 #444">
+			<br></br><br></br><b>Shifting Landscapes: </b></h4>
+			<br></br><br></br><h1 class="w3-opacity 
+			w3-padding-large 
+			w3-margin-top">Unraveling the Pandemic-Age Population and Housing Decentralization in America</h1>
+		
+		</div>
+
+		<div class="page_title">
+			<br></br><br></br><h5>Introduction</h5>
+			   </div>
+	   
+		<div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>The Covid-19 pandemic caused a radical change in social, economic and demographic changes in the United States. This change reflected on the housing pattern of this nation resulted in many people reconsidering where they would live. These transformations had a significant impact on the US housing markets, that homeowners and the potential buyers may postpone their plan on real estate trading, and influenced the developers’ strategy on new home buildings as the result. The domestic population movement also reflected the fear of densely populated metropolitan areas and showed a trend of new suburbanization. And the popularity of remote working also may influence people’s decision on housing.</h2></div> 
+			<br></br>
+	   </div>
+	  
+       <div class="page_narrow">
+            <div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>In this research, we examined the data from the United States Census Bureau, including new housing built, percentage of housing building years and population changes on county level,  and New York City Health and Planning authorities, including population migration and new home completion by zip codes. Our data shows a strong correlation between population change and new home developments on a national level, that the population in major coastal metropolitan areas dropped significantly and separately migrated to inland or southern states such as Arizona, Utah, Texas and Florida. And the new home completion data shows the hot real estate development counties mostly located in or near these states. The surrounding metropolitan area grew faster than the core city, indicating that suburban and exurban growth outpaced urban growth. As a case study, we also analyzed the data from New York City. The population moving trends in the city were highly homogeneous generally in 2018 to 2022, but a significant migration volume appeared in 2020. The new housing development data shows less correlation with the population migration or the national level data that may prove the new real estate business in New York City has less influence from the pandemic. </h2>
+            </div> <br></br>	
+		</div>
+
+		<div class="page_line">
+			<div class="vl"></div>
+			   </div>
+	    
+		<div class="page_title">
+				<br></br><br></br><h5>Housing and Population in the Pandemic</h5>
+		 </div>
+			
+		<div class="page">
+		
+			<br></br><iframe src="./Map_Precentage Housing after 2020/Housing_Units_Change_By_Counties_URL_addborder_colorscale.html" width="1000" height="900" frameborder="0" scrolling="no"></iframe>
+		</div>
+        <div class="page">
+		
+			<br></br><iframe src="./Map_Precentage Population after 2020/Popluation_Change_By_Counties_addstroke_colorscale.html" width="1000" height="900" frameborder="0" scrolling="no"></iframe>
+		</div>
+        <div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>The supply of housing units sees the most significant increase in the Southeast coastal region, in states including Florida, South Carolina, North Carolina, and Georgia, as well as counties in certain Mountain states such as Utah, Colorado, and Idaho. In Texas, counties around Dallas, Austin, and Houston have significantly surged in housing supply, up to around a 10% increase. The percentage change in housing units loosely corresponds to the percentage of population change, as seen in corresponding changes in states such as Texas and Florida. There is a mismatch in supply and demand with the population declining while housing units increased  in the South Central region, including Louisiana and Alabama.</h2></div>
+            <br></br>
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>Since the COVID-19 pandemic began, between 2020 and 2022, the population change at the county level has been quite significant. Certain counties in states such as Florida, Georgia, South Carolina, Texas, Nevada, and Montana have significant population increases. Meanwhile, population decline is pervasive in states such as Illinois, Arkansas, Mississippi, Louisiana and New Mexico.</h2></div>
+			
+        </div>
+       
+        <div class="page_line">
+		 <div class="vl"></div>
+			</div>
+
+		<div class="page_line">
+				<br></br><br></br><h5></h5>
+		</div>	
+		
+		<div class="page">
+		  
+			<br></br><iframe src="./Chart_Population Change 20-22/County_popchange.html" width="900" height="900" frameborder="0" scrolling="no"></iframe>
+		</div>
+
+		<div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>The chart shows top 10 counties in which have the largest increase and decrease of population. All the counties with significant population drop are located in major metropolitan areas, which LA county has loss more than 300,000 people. However, nine of the ten counties with increasing population are located in Arizona, Florida and Texas, and all of them are suburban areas surrounding a core city.</h2></div>
+		
+		</div>
+		
+		<div class="page_line">
+			<div class="vl"></div>
+			   </div>
+
+		<div class="page_title">
+				<br></br><br></br><h5>Hirtoric Trend on Housing</h5>
+		</div>
+
+		<div class="page">
+		  
+			<br></br><iframe src="./Chart_Housing Complete 74-22/New_Housing_Units_Completed_1974-2022_single_multiple.html" width="1300" height="900" frameborder="0" scrolling="no"></iframe>
+        </div>  
+		
+		<div class="page">
+		  
+			<br></br><iframe src="./Chart_Housing Complete 74-22/New_Housing_Units_Completed_1974-2022_2ormore.html" width="1300" height="900" frameborder="0" scrolling="no"></iframe>
+		 </div> 
+	    <div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>The first chart shows the supply of newly completed housing units, comparing single-family units and multi-family units (units in buildings with 2 or more units). Supply of single-family units peaked in 2005 and is at its lowest in 2011 since 1974. Single-family unit completion steadily recovered from 2011 to 2021 and declined slightly in 2022. While single-family units had a significant rise and drop between 2000-2011, multi-family unit completion remained steady. For multifamily units, the number of completions dropped sharply in 2021 but recovered in 2022. 
+
+
+				The second chart compares new unit completions of a range of unit types among multi-family units. While units in buildings with 2 to 4 units, 5 to 9 units, and 10 to 19 units, have declined to a low supply over the years, units in buildings with 20 or more units have sharply increased since 2011, from the trough of around 14,000 units to the peak of 87,000 units in 2019. The completion of housing units in 20 or unit-buildings declined sharply in 2021 to 68,000 units and recovered to 82,000 units in 2022.
+				</h2></div>
+			
+        </div>
+
+		<div class="page_line">
+			<div class="vl"></div>
+			   </div>
+
+		<div class="page_narrow">
+			<br></br><iframe src="./Chart_New Residential 18-22/New_Residential_Started_2018-2022_URL.html" width="600" height="900" frameborder="0" scrolling="no"></iframe>
+			
+        </div>
+        <div class="page_narrow">
+			<br></br><iframe src="./Chart_New Residential 18-22/New_Residential_Built_2018-2022_URL.html" width="600" height="900" frameborder="0" scrolling="no"></iframe>
+			
+        </div>
+       <div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>From 2018 to 2022, there was a consistent growth in the supply of newly constructed housing units. Among the various regions in the United States, the South witnessed the highest number of housing units built, whereas the Northeast experienced the lowest construction activity in terms of housing units. In 2022, there was a drop in new housing units that began construction, after a higher-than-normal increase in 2021. It is interesting to note that housing unit construction didn’t see any overall decline until 2022, two years after the pandemic began.
+            </h2></div>
+			
+        </div>
+
+		<div class="page_line">
+			<div class="vl"></div>
+			   </div>
+
+		<div class="page_title">
+				<br></br><br></br><h5>Case Study on NYC</h5>
+		</div>	   
+
+		<div class="page">
+			<br></br><iframe src="./Map_NYC/plotly_mapbox_Changeofaddressstats1822_yearly2 .html" width="1000" height="900" frameborder="0" scrolling="no"></iframe>
+
+        </div>
+		<div class="page">
+			<br></br><iframe src="./Map_NYC/plotly_mapbox_HousingCompletion18-22_map .html" width="1000" height="900" frameborder="0" scrolling="no"></iframe>
+
+        </div>
+        <div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>Moving trends were defined by the movement of ZIP codes. Within each ZIP code, the difference between outflows and inflows was calculated and visualized as NET. A revealing finding was that while moving trends in the city were highly homogeneous from 2018, the starting point of the study period, to February 2020, during the outbreak of the pandemic in March 2020, extreme migration volumes were observed primarily in Manhattan and some Brooklyn neighborhoods such as DUMBO.In Manhattan, where household incomes are considered relatively high, home-moving trends emerged only among high-income workers; in general, moving trends were extremely subdued</h2></div>
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>A visualization was created of how many new homes were built and how many homes were completed in a given year.This was negatively correlated with the location of the move-up trend: the most homes were built in the Williamsburg neighborhood of Brooklyn from 2018 to 2022, suggesting that higher-income Manhattanites may have moved to Brooklyn.</h2></div>
+        </div>
+		
+		<div class="page_line">
+			<div class="vl"></div>
+			   </div>
+
+		<div class="page_title">
+				<br></br><br></br><h5>Conclusion</h5>
+		</div>
+		
+		<div class="page_narrow">
+			<div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>In conclusion, the COVID-19 pandemic triggered a rapid shift in social, economic, and demographic aspects across the United States, prompting a reconsideration of housing and living conditions broadly in the society. Our research, based on data from the United States Census Bureau and New York City Health and Planning authorities, reveals a substantial impact on the housing market. Nationally, we observe a correlation between population changes and new home developments, with a significant migration trend away from coastal metropolitan areas towards inland and southern states. The suburban and exurban areas experienced faster growth compared to urban centers. Notably, the South, particularly in states like Florida, witnessed a surge in both population and housing supply. </h2></div> 
+			<br></br>
+	   </div>
+	  
+       <div class="page_narrow">
+            <div class="w3-container w3-cell w3-cell-middle"><br></br><br></br><h2>Analyzing new housing construction, we note that the Southeast coastal region and certain Mountain states showed the most significant increases. The supply of single-family units experienced fluctuations, while multi-family units, especially in buildings with 20 or more units, showed a notable increase. The study in NYC data revealed homogeneous patterns until the pandemic outbreak with extreme migration volumes observed in Manhattan and Brooklyn neighborhoods in 2020. Although with less correlation, a notable number moved from Manhattan to the Brooklyn and Queens neighborhoods may indicate that the suburbanization also happened in NYC. 
+				In essence, our findings underscore the dynamic impact of the pandemic on housing patterns, with shifting preferences, migration trends, and varying construction dynamics reshaping the real estate landscape across the United States.
+				</h2>
+            </div> <br></br>	
+		</div>
+
+		<div class="page_line">
+			<div class="vl"></div>
+		</div>
+
+		<div class="page_ending">
+			<br></br><br></br>
+		  <div class="w3-container w3-cell w3-cell-middle"><h3 class="w3-opacity 
+			w3-padding-large 
+			w3-margin-top" >This research is the final project of Data Visualization Course in Columbia University, Dec 2023.</h3></div>
+		  <div class="w3-container w3-cell w3-cell-middle"><h3 class="w3-opacity 
+			w3-padding-large 
+			w3-margin-top" >Data research, charts and website by Alison Lam, Soichiro Harada and Yaozhi Liu.</h3></div>
+
+		</div>
+
+		<div class="page_line">
+			<div class="vl"></div>
+		</div>
+
+
+	</div>
+	</main>
+	
+	<script>
+	  let container = document.querySelector(".container");
+		container.addEventListener("wheel",(event) => {
+			event.preventDefault();
+			container.scrollLeft += event.deltaY;
+		});
+	
+	</script>
+</body>
+</html>
