@@ -75,7 +75,7 @@ const dataset = [
 const svg = d3.select("#chart-container")
   .append("svg")
   .attr("width", 800)
-  .attr("height", 1600);
+  .attr("height", 1200);
 
 // Create x and y scales
 var xScale = d3.scaleBand()
@@ -85,7 +85,7 @@ var xScale = d3.scaleBand()
 
 var yScale = d3.scaleLinear()
   .domain([d3.min(dataset, d => d.Population_Change), d3.max(dataset, d => d.Population_Change)])
-  .range([1000, 0]);
+  .range([500, 0]);
 
 // Create x and y axes
 const xAxis = d3.axisBottom(xScale);
@@ -106,7 +106,7 @@ svg.selectAll("rect")
   .append("rect")
   .attr("id", "Bars")
   .attr("x", d => xScale(d.County))
-  .attr("y", d => (d.Population_Change >= 0) ? yScale(d.Population_Change) +190 : yScale(0) +210)
+  .attr("y", d => (d.Population_Change >= 0) ? yScale(d.Population_Change) +290 : yScale(0) +310)
   .attr("width", xScale.bandwidth())
   .attr("height", d => Math.abs(yScale(d.Population_Change) - yScale(0)))
   .attr("fill", d => d.Population_Change < 0 ? "hsl(0, 70%, 70%)" : "hsl(120, 50%, 70%)"); // Use different colors for positive and negative values
@@ -141,7 +141,7 @@ svg.selectAll(".number-label")
   .attr("class", "number-label")
   .text(d => d.Population_Change)
   .attr("x", d => xScale(d.County) + xScale.bandwidth() / 2)
-  .attr("y", d => (d.Population_Change >= 0) ? yScale(d.Population_Change) + 180 : yScale(d.Population_Change) + 220)
+  .attr("y", d => (d.Population_Change >= 0) ? yScale(d.Population_Change) + 300 : yScale(d.Population_Change) + 300)
   .attr("text-anchor", "middle")
   .attr("alignment-baseline", "middle")
   .attr("fill", "black");
